@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ফুটন্ত গোলাপ সংগঠন</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* === প্রিমিয়াম UI বেস স্টাইল === */
+        :root {
+            --primary: #2563eb; 
+            --primary-dark: #1e40af;
+            --accent: #f59e0b; 
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: 'Poppins', 'Noto Sans Bengali', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.7;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+            position: relative;
+        }
+
+        /* === প্রিমিয়াম ইন্ট্রো অ্যানিমেশন (Intro Splash Screen) === */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: radial-gradient(circle, #1e3a8a 0%, #0f172a 100%);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .intro-content {
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .intro-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 40px rgba(37, 99, 235, 0.6);
+            animation: introLogoAnim 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        .intro-title {
+            font-size: calc(1.4rem + 1vw); /* ডায়নামিক টেক্সট সাইজ */
+            margin-top: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+            background: linear-gradient(90deg, #ffffff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: introTextAnim 0.8s ease 0.4s forwards;
+            opacity: 0;
+            word-wrap: break-word;
+        }
+
+        .intro-subtitle {
+            font-size: 0.95rem;
+            margin-top: 12px;
+            color: #cbd5e1;
+            font-weight: 300;
+            animation: introTextAnim 0.8s ease 0.6s forwards;
+            opacity: 0;
+            line-height: 1.6;
+        }
+
+        @keyframes introLogoAnim {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes introTextAnim {
+            0% { transform: translateY(15px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* === অ্যানিমেশন ইফেক্টস === */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        /* === বিজ্ঞাপন বক্স (Ads) স্টাইল === */
+        .ad-box {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .ad-banner-top { height: 90px; width: 100%; max-width: 728px; margin: 20px auto; } 
+        .ad-banner-bottom { height: 90px; width: 100%; max-width: 728px; margin: 40px auto; }
+        .ad-sidebar { height: 250px; width: 100%; max-width: 300px; margin: 25px auto; } 
+        .ad-inline { height: 100px; width: 100%; margin: 20px 0; }
+
+        /* === ব্যাক বাটন === */
+        .back-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-card);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+        .back-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .back-btn i { margin-right: 6px; }
+
+        /* === হেডার সেকশন === */
+        header {
+            text-align: center;
+            background: var(--bg-card);
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 30px;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .logo {
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            font-size: calc(1.3rem + 1vw); /* রেসপনসিভ টাইটেল */
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+            line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-dark), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            word-wrap: break-word;
+        }
+        header p { color: var(--text-light); font-size: 1rem; max-width: 650px; margin: 0 auto;}
+
+        /* === হোম পেজ বাটন গ্রিড === */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease;
+        }
+        @media (min-width: 768px) { .button-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+        @media (min-width: 1024px) { .button-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .nav-btn {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; width: 100%; height: 130px; 
+            background: var(--bg-card);
+            color: var(--text-dark);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .nav-btn i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .nav-btn span { font-weight: 600; font-size: 0.95rem; }
+
+        .nav-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* === প্রিমিয়াম সেকশন স্টাইল === */
+        .section {
+            display: none; 
+            background: var(--bg-card);
+            padding: 30px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-lg);
+            margin-top: 80px;
+            animation: fadeInUp 0.4s ease;
+        }
+        @media (min-width: 768px) { .section { padding: 40px; } }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+        .section h2::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 4px;
+            background: var(--primary); border-radius: 2px;
+        }
+
+        .section p { font-size: 1.05rem; color: #475569; margin-bottom: 15px; }
+        .section ul { margin-left: 5px; color: #475569; list-style-type: none; }
+        .section ul li { margin-bottom: 10px; position: relative; padding-left: 25px; }
+        .section ul li::before {
+            content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; left: 0; color: var(--accent);
+        }
+
+        /* === সদস্য কার্ড === */
+        .member-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 14px; 
+        }
+        .member-card {
+            display: flex; align-items: center;
+            background: var(--bg-card);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+        .serial-no { font-weight: 700; font-size: 1rem; padding: 0 10px; color: var(--primary); }
+        .member-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; margin-right: 12px; }
+        .member-info { flex: 1; min-width: 0; }
+        .member-info h4 { font-size: 1rem; margin: 0; font-weight: 600; color: var(--text-dark); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .member-info p { font-size: 0.85rem; color: var(--text-light); margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* === পরিচালক কার্ড === */
+        .director-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .director-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100%; 
+        }
+        .director-img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+        .director-info { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .director-info h3 { font-size: 1.2rem; margin-bottom: 6px; color: var(--text-dark); word-break: break-word; }
+        .director-info p { font-size: 0.9rem; color: var(--text-light); margin: 2px 0; word-break: break-word; }
+        .director-phone { color: var(--primary); font-weight: 600; margin-top: 10px; display: inline-flex; align-items: center; text-decoration: none; font-size: 0.9rem; }
+        .director-phone i { margin-right: 6px; }
+
+        /* === নোটিশ বোর্ড (লেখা অটো র‍্যাপ হবে) === */
+        .notice-container { display: flex; flex-direction: column; gap: 16px; }
+        .notice-item {
+            border-left: 5px solid var(--accent);
+            background: #fffbeb;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+        .notice-date { font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-bottom: 4px; display: block; }
+        .notice-item h3 { color: var(--text-dark); margin-bottom: 8px; font-size: 1.25rem; line-height: 1.4; word-break: break-word; }
+        .notice-item p { font-size: 0.95rem; color: #475569; line-height: 1.6; margin-bottom: 12px; word-break: break-word; white-space: pre-line; }
+        .notice-img { max-width: 100%; height: auto; max-height: 350px; object-fit: cover; margin: 10px 0; border-radius: 8px; }
+        .notice-btn {
+            display: inline-flex; align-items: center; background: var(--accent); color: white;
+            padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem;
+        }
+        .notice-btn i { margin-right: 6px; }
+
+        /* === আবেদন ফর্ম === */
+        .form-box { background: #eff6ff; padding: 30px 15px; border-radius: 16px; text-align: center; border: 1px solid #bfdbfe; max-width: 500px; margin: 0 auto; }
+        .form-link-btn {
+            display: inline-flex; align-items: center; background: var(--primary); color: white;
+            padding: 12px 28px; text-decoration: none; border-radius: 50px; font-weight: 600; margin-top: 15px;
+            animation: pulse 2s infinite;
+        }
+        .form-link-btn i { margin-right: 6px; }
+
+        /* === সোশ্যাল মিডিয়া === */
+        .social-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+        .social-card {
+            display: flex; align-items: center; justify-content: center;
+            height: 50px; color: white; text-decoration: none; border-radius: 10px; font-weight: 600;
+        }
+        .social-card i { margin-right: 10px; font-size: 1.1rem; }
+        .social-card.facebook { background: #1877f2; }
+        .social-card.youtube { background: #ff0000; }
+
+        /* === স্পন্সর গ্রিড (অটো হাইট অ্যান্ড ব্রেক ফিক্স) === */
+        .sponsor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        
+        .sponsor-card-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none; 
+            color: var(--text-dark); 
+            box-shadow: var(--shadow-sm);
+            height: 100%; 
+            transition: var(--transition);
+        }
+        .sponsor-card-btn:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--shadow-lg); }
+
+        .sponsor-card-info-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .sponsor-card-btn .sponsor-img { max-width: 120px; max-height: 50px; object-fit: contain; margin-bottom: 15px; }
+        .sponsor-card-btn h3 { font-size: 1.15rem; margin-bottom: 6px; font-weight: 600; word-break: break-word; width: 100%; }
+        .sponsor-card-btn p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 15px; word-break: break-word; width: 100%; line-height: 1.5; }
+        .visit-btn { display: inline-block; background: #f1f5f9; color: var(--primary); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; width: 100%; max-width: 160px; }
+        .sponsor-card-btn:hover .visit-btn { background: var(--primary); color: white; }
+    </style>
+</head>
+<body>
+
+<div id="ubdg-premium-bar">
+    <div class="ubdg-glow-line"></div>
+    
+    <button onclick="closeBottomBar()" class="ubdg-close-btn" title="বন্ধ করুন">✕</button>
+
+    <div class="ubdg-wrapper">
+        <div class="ubdg-brand">
+            <div class="ubdg-pulse-dot"></div>
+            <span class="ubdg-main-title">Unity Bussid Gaming <span class="ubdg-tag">(UBDG)</span></span>
+        </div>
+
+        <div class="ubdg-grid">
+            <a href="https://youtube.com/@bdbusloveratik" target="_blank" class="ubdg-item">
+                <button class="ubdg-card-btn btn-yt">
+                    <div class="btn-overlay"></div>
+                    <span class="btn-icon">🎬</span>
+                    <span class="btn-text">BD BUS LOVER ATIK</span>
+                </button>
+            </a>
+
+            <a href="https://youtube.com/@promptarenaubdg" target="_blank" class="ubdg-item">
+                <button class="ubdg-card-btn btn-yt">
+                    <div class="btn-overlay"></div>
+                    <span class="btn-icon">🎬</span>
+                    <span class="btn-text">Prompt Arena YT</span>
+                </button>
+            </a>
+
+            <a href="https://bdbusloveratik65.github.io/Bussid-Mod-Hub-/" target="_blank" class="ubdg-item">
+                <button class="ubdg-card-btn btn-apk">
+                    <div class="btn-overlay"></div>
+                    <span class="btn-icon">📲</span>
+                    <span class="btn-text">Bussid Mod Hub APK</span>
+                </button>
+            </a>
+
+            <a href="https://bdbusloveratik65.github.io/Prompt-Arena" target="_blank" class="ubdg-item">
+                <button class="ubdg-card-btn btn-apk">
+                    <div class="btn-overlay"></div>
+                    <span class="btn-icon">📲</span>
+                    <span class="btn-text">Prompt Arena APK</span>
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 🎨 নতুন আল্ট্রা প্রিমিয়াম সিএসএস স্টাইল */
+    #ubdg-premium-bar {
+        position: fixed;
+        bottom: 20px; /* ফ্লোটিং লুক দেওয়ার জন্য নিচে ফাঁকা জায়গা */
+        left: 50%;
+        transform: translate(-50%, 150%); /* নিচ থেকে উঠে আসার অ্যানিমেশন */
+        width: 95%;
+        max-width: 1300px;
+        background: linear-gradient(135deg, rgba(10, 15, 30, 0.92) 0%, rgba(5, 8, 16, 0.98) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(191, 149, 63, 0.25);
+        border-radius: 24px; /* আধুনিক রাউন্ডেড শেপ */
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 
+                    0 0 30px rgba(191, 149, 63, 0.1);
+        padding: 16px 50px 16px 25px;
+        z-index: 999999;
+        display: none;
+        transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.1); /* ইলাস্টিক স্লাইড আপ */
+    }
+
+    /* বারটি স্ক্রিনে অ্যাক্টিভ করার ক্লাস */
+    #ubdg-premium-bar.show {
+        display: block;
+        transform: translate(-50%, 0);
+    }
+
+    /* টপ এনিমেটেড গ্লোয়িং নিয়ন লাইন */
+    .ubdg-glow-line {
+        position: absolute;
+        top: 0; left: 10%; right: 10%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #bf953f, #fcf6ba, #aa771c, transparent);
+        box-shadow: 0 2px 10px rgba(252, 246, 186, 0.5);
+    }
+
+    .ubdg-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+    }
+
+    /* ব্র্যান্ডিং সেকশন */
+    .ubdg-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        white-space: nowrap;
+    }
+
+    /* লাইভ ব্লিংকিং ডট */
+    .ubdg-pulse-dot {
+        width: 8px; height: 8px;
+        background: #00ffcc;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #00ffcc;
+        animation: ubdgPulse 1.5s infinite;
+    }
+
+    @keyframes ubdgPulse {
+        0% { transform: scale(0.9); opacity: 0.6; }
+        50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 15px #00ffcc; }
+        100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    .ubdg-main-title {
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .ubdg-tag {
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* বাটন গ্রিড লেআউট (পিসিতে ১ লাইনে পাশাপাশি ৪টি) */
+    .ubdg-grid {
+        display: flex;
+        gap: 12px;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .ubdg-item {
+        text-decoration: none;
+        flex-grow: 1;
+        max-width: 230px;
+    }
+
+    /* ফিউচারিস্টিক থ্রিডি কার্ড বাটন */
+    .ubdg-card-btn {
+        position: relative;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.02);
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 12px 16px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+    }
+
+    /* বাটনের ভেতর লাইটিং ওভারলে */
+    .btn-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+        transition: opacity 0.3s;
+    }
+
+    /* হোভার ইফেক্ট */
+    .ubdg-card-btn:hover {
+        color: #000;
+        transform: translateY(-3px);
+        border-color: transparent;
+    }
+
+    /* ইউটিউব বাটনের হোভার কালার */
+    .btn-yt:hover {
+        background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+        box-shadow: 0 8px 20px rgba(255, 75, 43, 0.4);
+    }
+
+    /* এপিকে বাটনের হোভার কালার */
+    .btn-apk:hover {
+        background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 100%);
+        box-shadow: 0 8px 20px rgba(191, 149, 63, 0.4);
+    }
+
+    .btn-icon {
+        font-size: 14px;
+        z-index: 2;
+    }
+
+    .btn-text {
+        z-index: 2;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    /* প্রিমিয়াম ক্লোজ বাটন */
+    .ubdg-close-btn {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        width: 26px; height: 26px;
+        border-radius: 50%;
+        color: #64748b;
+        font-size: 11px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+
+    .ubdg-close-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 📱 মোবাইল রেসপনসিভ কনফিগারেশন */
+    @media (max-width: 992px) {
+        #ubdg-premium-bar {
+            padding: 15px;
+            bottom: 10px;
+        }
+
+        .ubdg-wrapper {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+        }
+
+        .ubdg-brand {
+            justify-content: center;
+        }
+
+        /* আপনার অনুরোধ অনুযায়ী: মোবাইলে পারফেক্ট ২ কলাম ও ২ লাইনে সাজানো */
+        .ubdg-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .ubdg-item {
+            max-width: 100%;
+        }
+
+        .ubdg-card-btn {
+            justify-content: center;
+            padding: 10px;
+            font-size: 11px;
+            border-radius: 12px;
+        }
+
+        .ubdg-close-btn {
+            top: 15px;
+            right: 15px;
+            transform: none;
+        }
+    }
+</style>
+
+<script>
+const ubdgBar = document.getElementById("ubdg-premium-bar");
+
+function showBottomBar() {
+    ubdgBar.style.display = "block";
+    setTimeout(() => {
+        ubdgBar.classList.add("show");
+    }, 50);
+}
+
+function closeBottomBar() {
+    ubdgBar.classList.remove("show");
+    setTimeout(() => {
+        ubdgBar.style.display = "none";
+    }, 700);
+}
+
+// ৫ সেকেন্ড পরে স্মুথ ট্রানজিশনে ভেসে উঠবে
+setTimeout(showBottomBar, 5000);
+
+// বারটি বন্ধ করা থাকলে প্রতি ৩০ সেকেন্ড পর পর চেক করে আবার ওপেন করবে
+setInterval(() => {
+    if(!ubdgBar.classList.contains("show")) {
+        showBottomBar();
+    }
+}, 30000);
+</script>
+
+<div id="intro-screen">
+    <div class="intro-content">
+        <img src="https://i.postimg.cc/Bnd8Jpk2/file-00000000278471fa89e363a63df3ef44.png" alt="লোগো" class="intro-logo">
+        <h3 class="intro-title">Phutonto Gulap Sangathan ( P.G.S )</h3>
+        <p class="intro-subtitle">মানব কল্যাণে নিয়োজিত একটি অলাভজনক স্বেচ্ছাসেবী সংগঠন।<br><span style="font-size: 0.85rem; opacity: 0.75; display:block; margin-top:5px;">Developer: BD BUS LOVER ATIK</span></p>
+    </div>
+</div>
+
+<div class="container">
+    
+    <div class="ad-box ad-banner-top">
+        <i class="fas fa-ad"></i><script>
+  atOptions = {
+    'key' : '16aaf1db5e3e451cc4216a6c517a8c47',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/16aaf1db5e3e451cc4216a6c517a8c47/invoke.js"></script>
+    </div>
+
+    <button class="back-btn" id="backBtn" onclick="goBack()"><i class="fas fa-arrow-left"></i> ফিরে যান</button>
+
+    <div id="homePage">
+        <header>
+            <img src="https://i.postimg.cc/Bnd8Jpk2/file-00000000278471fa89e363a63df3ef44.png" alt="সংগঠন লোগো" class="logo">
+            <h3>ফুটন্ত গোলাপ সংগঠন ( পি.জি.এস. )</h3>
+            <p>মানব কল্যাণে নিয়োজিত একটি অলাভজনক স্বেচ্ছাসেবী সংগঠন। আমাদের লক্ষ্য ও উদ্দেশ্য সম্পর্কে বিস্তারিত জানতে নিচের বাটনগুলো দেখুন।</p>
+        </header>
+
+        <nav class="button-grid">
+            <button class="nav-btn" onclick="showSection('welcome')">
+                <i class="fas fa-handshake"></i>
+                <span>সাগতম</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('about')">
+                <i class="fas fa-info-circle"></i>
+                <span>সংগঠন নিয়ে কিছু কথা</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('rules')">
+                <i class="fas fa-gavel"></i>
+                <span>সংগঠনের নিয়মাবলী</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('members')">
+                <i class="fas fa-users"></i>
+                <span>সদস্যদের নাম</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('directors')">
+                <i class="fas fa-user-tie"></i>
+                <span>সংগঠন পরিচালক</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('notice')">
+                <i class="fas fa-bullhorn"></i>
+                <span>নোটিশ বোর্ড</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('form')">
+                <i class="fas fa-wpforms"></i>
+                <span>আবেদন ফর্ম</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('social')">
+                <i class="fas fa-share-alt"></i>
+                <span>সোশ্যাল মিডিয়া</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('sponsors')">
+                <i class="fas fa-award"></i>
+                <span>ডেভেলপার স্পন্সর</span>
+            </button>
+        </nav>
+        
+        <div class="ad-box ad-inline">
+            <i class="fas fa-ad"></i><script>
+  atOptions = {
+    'key' : '16aaf1db5e3e451cc4216a6c517a8c47',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/16aaf1db5e3e451cc4216a6c517a8c47/invoke.js"></script>
+        </div>
+    </div>
+
+    <section id="welcome" class="section">
+        <h2>ওয়েলকাম মেসেজ</h2>
+        <p>আমাদের সংগঠনের অফিসিয়াল ওয়েবসাইটে আপনাকে উষ্ণ অভিনন্দন। আপনার উপস্থিতি আমাদের অনুপ্রাণিত করে।</p>
+        <div class="ad-box ad-sidebar"><i class="fas fa-ad"></i><script>
+  atOptions = {
+    'key' : '1cecefe53ed2c0dfefe6cb150c0982f2',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/1cecefe53ed2c0dfefe6cb150c0982f2/invoke.js"></script>
+</div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>সংগঠন নিয়ে কিছু কথা</h2>
+        <p>এখানে সংগঠনের ভিশন, মিশন এবং ইতিহাস বিস্তারিতভাবে লেখা থাকবে। আমরা সমাজের ইতিবাচক পরিবর্তনের জন্য কাজ করি।</p>
+    </section>
+
+    <section id="rules" class="section">
+        <h2>সংগঠনের নিয়মাবলী</h2>
+        <ul>
+            <li>নিয়ম ১: সংগঠনের সংবিধান ও আদর্শ মেনে চলা।</li>
+            <li>নিয়ম ২: সকল মিটিং ও কার্যক্রমে সক্রিয়ভাবে অংশগ্রহণ করা।</li>
+            <li>নিয়ম ৩: সদস্যদের মধ্যে পারস্পরিক সম্মান বজায় রাখা।</li>
+        </ul>
+    </section>
+
+    <section id="members" class="section">
+        <h2>সদস্যদের নাম</h2>
+        <div class="member-grid">
+            <div class="member-card">
+                <span class="serial-no">০১.</span>
+                <img src="https://i.postimg.cc/W4jnPGZT/IMG-20260712-122601.jpg" alt="সদস্য" class="member-img">
+                <div class="member-info">
+                    <h4>মোঃ ইব্রাহিম</h4>
+                    <p>বড় মুসলিম পাড়া , ফাইতং</p>
+                </div>
+            </div>
+            <div class="member-card">
+                <span class="serial-no">০২.</span>
+                <img src="https://i.postimg.cc/gjM5xMvr/IMG-20260712-122051.jpg" alt="সদস্য" class="member-img">
+                <div class="member-info">
+                    <h4>মোঃ ইলিয়াস</h4>
+                    <p>বড় মুসলিম পাড়া , ফাইতং</p>
+                </div>
+            </div>
+        </div>
+        <div class="ad-box ad-sidebar"><i class="fas fa-ad"></i><script>
+  atOptions = {
+    'key' : '1cecefe53ed2c0dfefe6cb150c0982f2',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/1cecefe53ed2c0dfefe6cb150c0982f2/invoke.js"></script>
+</div>
+
+            <div class="member-card">
+                <span class="serial-no">০৩.</span>
+                <img src="https://i.postimg.cc/bYbj68qy/IMG-20260609-132704.jpg" alt="সদস্য" class="member-img">
+                <div class="member-info">
+                    <h4>মোঃ আতিকুর রহমান</h4>
+                    <p>বড় মুসলিম পাড়া , ফাইতং</p>
+                </div>
+            </div>
+
+    </section>
+
+    <section id="directors" class="section">
+        <h2>সংগঠন পরিচালকবৃন্দ</h2>
+        <div class="director-grid">
+            <div class="director-card">
+                <img src="https://i.postimg.cc/bYbj68qy/IMG-20260609-132704.jpg" alt="পরিচালক" class="director-img">
+                <div class="director-info">
+                    <div>
+                        <h3>মোঃ আতিকুর রহমান</h3>
+                        <p><strong>পদবী:</strong>Developer</p>
+                        <p><strong>ঠিকানা:</strong>ফাইতং , লামা , বান্দরবান , বাংলাদেশ</p>
+                    </div>
+                    <a href="tel:01827404265" class="director-phone"><i class="fas fa-phone-alt"></i>01827404265</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="notice" class="section">
+        <h2>নোটিশ বোর্ড</h2>
+        <div class="notice-container">
+            <div class="notice-item">
+                <span class="notice-date"><i class="far fa-calendar-alt"></i> ১১ জুলাই, ২০২৬</span>
+               <img src="https://i.postimg.cc/Bnd8Jpk2/file-00000000278471fa89e363a63df3ef44.png" alt="নোটিশ ফটো" class="notice-img">
+                <h3>জরুরী সাধারণ সভা - ২০২৬ (এখানে নোটিশের টাইটেল ৩-৪ লাইনের অনেক বড় হলেও দেখতে চমৎকার লাগবে)</h3>
+                <p>এখানে নোটিশের বিস্তারিত বিবরণ থাকবে। লেখা যদি অনেক বড় বা কয়েক প্যারাগ্রাফের হয়, তবুও বক্সটি স্বয়ংক্রিয়ভাবে নিজের আকার ঠিক করে নেবে। কোনো ডিজাইন নষ্ট হবে না।</p>
+                <a href="#" class="notice-btn"><i class="fas fa-download"></i> পিডিএফ ডাউনলোড</a>
+            </div>
+            <div class="notice-item">
+                <span class="notice-date"><i class="far fa-calendar-alt"></i> ০৫ জুন, ২০২৬</span>
+               <img src="https://i.postimg.cc/Bnd8Jpk2/file-00000000278471fa89e363a63df3ef44.png" alt="নোটিশ ফটো" class="notice-img">
+                <h3>ত্রাণ বিতরণ কর্মসূচী</h3>
+                <p>বন্যাদুর্গতদের সহায়তায় আমাদের সংগঠনের পক্ষ থেকে ত্রাণ বিতরণ কার্যক্রমের স্থিরচিত্র।</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="form" class="section">
+        <h2>সংগঠন আবেদন ফর্ম</h2>
+        <div class="form-box">
+            <p>আপনি কি আমাদের সাথে কাজ করতে আগ্রহী? নতুন সদস্য পদের জন্য আবেদন করতে নিচের বাটনে ক্লিক করুন।</p>
+            <a href="https://forms.google.com/your-form" target="_blank" class="form-link-btn"><i class="fab fa-wpforms"></i> অনলাইনে আবেদন করুন</a>
+        <div class="ad-box ad-sidebar"><i class="fas fa-ad"></i><script>
+  atOptions = {
+    'key' : '1cecefe53ed2c0dfefe6cb150c0982f2',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/1cecefe53ed2c0dfefe6cb150c0982f2/invoke.js"></script>
+</div>
+        </div>
+    </section>
+
+    <section id="social" class="section">
+        <h2>সোশ্যাল মিডিয়া লিংক</h2>
+        <div class="social-grid">
+            <a href="#" target="_blank" class="social-card facebook">
+                <i class="fab fa-facebook-f"></i> Facebook - আমাদের পেজ
+            </a>
+            <a href="#" target="_blank" class="social-card youtube">
+                <i class="fab fa-youtube"></i> YouTube - আমাদের চ্যানেল
+            </a>
+        </div>
+    </section>
+
+    <section id="sponsors" class="section">
+        <h2>ডেভেলপার স্পন্সর</h2>
+        <div class="sponsor-grid">
+            
+            <a href="https://www.abc-company.com" target="_blank" class="sponsor-card-btn">
+                <div class="sponsor-card-info-wrap">
+                    <img src="https://i.postimg.cc/Bnd8Jpk2/file-00000000278471fa89e363a63df3ef44.png" alt="স্পন্সর লোগো" class="sponsor-img">
+                    <h3>ABC Corporation Ltd.</h3>
+                    <p>প্রধান গোল增্ড স্পন্সর। এখানে যদি স্পন্সর কোম্পানির ব্যাপারে অনেক বড় ডেসক্রিপশন থাকে তবুও সব কার্ডের সাইজ সমান থাকবে এবং দেখতে নিখুঁত লাগবে।</p>
+                </div>
+                <span class="visit-btn">ওয়েবসাইট ভিজিট করুন <i class="fas fa-external-link-alt"></i></span>
+            </a>
+
+            <a href="https://www.xyz-foundation.org" target="_blank" class="sponsor-card-btn">
+                <div class="sponsor-card-info-wrap">
+                    <img src="https://i.postimg.cc/Bnd8Jpk2/file-00000000278471fa89e363a63df3ef44.png" alt="স্পন্সর লোগো" class="sponsor-img">
+                    <h3>XYZ Foundation</h3>
+                    <p>সহযোগী পার্টনার। ছোট বা বড় যেকোনো লেখার জন্য একদম পারফেক্ট অটো-ফিট লেআউট।</p>
+                </div>
+                <span class="visit-btn">ওয়েবসাইট ভিজিট করুন <i class="fas fa-external-link-alt"></i></span>
+            </a>
+
+        </div>
+    </section>
+
+    <div class="ad-box ad-banner-bottom">
+        <i class="fas fa-ad"></i><script>
+  atOptions = {
+    'key' : '16aaf1db5e3e451cc4216a6c517a8c47',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/16aaf1db5e3e451cc4216a6c517a8c47/invoke.js"></script>
+
+    </div>
+
+</div>
+
+<script>
+    // ইন্ট্রো স্ক্রিন স্ক্রিপ্ট
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
+            intro.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 600);
+        }, 3000); 
+    });
+
+    // সেকশন টগল সিস্টেম
+    function showSection(sectionId) {
+        document.getElementById('homePage').style.display = 'none';
+        
+        let sections = document.querySelectorAll('.section');
+        sections.forEach(sec => sec.style.display = 'none');
+        
+        let activeSection = document.getElementById(sectionId);
+        activeSection.style.display = 'block';
+        
+        document.getElementById('backBtn').style.display = 'block';
+        
+        history.pushState({ activeSection: sectionId }, "");
+        window.scrollTo(0, 0);
+    }
+
+    function showHome() {
+        let sections = document.querySelectorAll('.section');
+        sections.forEach(sec => sec.style.display = 'none');
+        document.getElementById('backBtn').style.display = 'none';
+        
+        document.getElementById('homePage').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    function goBack() {
+        history.back();
+    }
+
+    window.onpopstate = function(event) {
+        if (event.state && event.state.activeSection) {
+            showSection(event.state.activeSection);
+        } else {
+            showHome();
+        }
+    };
+
+    history.replaceState(null, "");
+</script>
+
+</body>
+</html>
